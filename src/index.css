@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  background-color: #000000;
+  color: aliceblue;
+}
+
+
+/* Custom Album Container Scrollbar  */
+
+.album-container-scroll::-webkit-scrollbar {
+  height: 1px;
+  background: #121212;
+}
+
+.album-container-scroll::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+.album-container-scroll::-webkit-scrollbar-thumb {
+  background: #b6b5b5;
+}
+
+/* Custom Discover Scrollbar  */
+.discover-scroll::-webkit-scrollbar {
+  width: 3px;
+  background: #121212;
+}
+
+.discover-scroll::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+.discover-scroll::-webkit-scrollbar-thumb {
+  background: #2b2b2b;
+}
+
+
+input[type="range"] {
+  -webkit-appearance: none;
+  margin-left: 2px;
+  margin-right: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  background-image: linear-gradient(#ffffff, #ffffff);
+  background-repeat: no-repeat;
+}
+
+input[type="range"]:hover{
+  background-image: linear-gradient(#1FDF64, #1FDF64);
+  background-repeat: no-repeat;
+}
+
+/* -webkit-slider-thumb and -webkit-slider-runnable-track */
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 0px;
+  width: 0px;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 2px 0 #555;
+  transition: background .3s ease-in-out;
+}
+
+
+input[type=range]::-webkit-slider-runnable-track  {
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+
+/* -moz-range-thumb and -moz-range-track*/
+
+input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none;
+  height: 0px;
+  width: 0px;
+}
+
+input[type="range"]:hover::-moz-range-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 2px 0 #555;
+  transition: background .3s ease-in-out;
+}
+
+
+input[type=range]::-moz-range-track  {
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+
+/* -ms-thumb and -ms-track */
+
+input[type="range"]::-ms-thumb {
+  -webkit-appearance: none;
+  height: 0px;
+  width: 0px;
+}
+
+input[type="range"]:hover::-ms-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 2px 0 #555;
+  transition: background .3s ease-in-out;
+}
+
+
+input[type=range]::-ms-track {
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
