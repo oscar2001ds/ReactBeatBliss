@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import viteIcon from '../../public/vite.svg';
+import logo from '../assets/logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { useGlobalVariables } from '../store/GlobalVariables';
 
 export const SignUp = () => {
-
+    const {urlApi} = useGlobalVariables()
     const [userEmail, setUserEmail] = useState('')
     const [UserNameInput, setUserNameInput] = useState('')
     const [userPassword, setUserPassword] = useState('')
@@ -15,7 +15,7 @@ export const SignUp = () => {
 
     const sendData = async (data) => {
         console.log('data', data)
-        const response = await fetch('http://127.0.0.1:8000/api/users/', {
+        const response = await fetch(`${urlApi}/users/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -82,14 +82,16 @@ export const SignUp = () => {
     return (
 
         <div className="w-screen h-screen flex flex-col">
-            <div className="flex justify-start items-center gap-2 p-6 bg-black">
-                <img src={`${viteIcon}`} alt="principalIcon"
-                    style={{
-                        height: '50px',
-                        width: '50px',
-                        backgroundSize: 'cover',
-                    }} />
-                <h1 className="text-2xl font-bold text-white">BeatBliss</h1>
+            <div className="flex justify-start gap-2 p-6 bg-black">
+                <div className='flex items-center hover:scale-105 cursor-default' onClick={()=>{navigate('/')}}>
+                    <img src={`${logo}`} alt="principalIcon"
+                        style={{
+                            height: '50px',
+                            width: '50px',
+                            backgroundSize: 'cover',
+                        }} />
+                    <h1 className="text-2xl font-bold text-white">BeatBliss</h1>
+                </div>
             </div>
             <div className='flex flex-grow justify-center  bg-gradient-to-b from-[#191919] to-[#070707]'>
                 <div className='mt-5 flex flex-col  w-[40vw] bg-black rounded-xl'>
@@ -122,7 +124,7 @@ export const SignUp = () => {
 
                         <div className='flex px-24'>
                             <div className='flex justify-center items-center w-full h-10 bg-[#1FDF64] rounded-full text-black font-bold text-lg mt-2 cursor-pointer hover:scale-105' onClick={handleSubmit}>
-                                Next
+                                Create Account
                             </div>
                         </div>
                     </div>

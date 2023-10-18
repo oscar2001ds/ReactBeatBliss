@@ -18,7 +18,7 @@ export const Player = () => {
     const { currentPlaylist, currentSongPos, setCurrentSongPos, setCurrentSongId, playState, setPlayState,
         songName, setSongName, songImg, setSongImg, infoButton, setInfoButton, playlistButton,
         songArtist, setSongArtist, setSongGenre, artists, setArtistImg, setArtistDesc, currentAlbumId, urlsArray,
-        firstPostLoad, setFirstPostLoad} = useGlobalVariables();
+        firstPostLoad, setFirstPostLoad, urlApi} = useGlobalVariables();
     const [audio, setAudio] = useState([null, false])
     const [preventPrevSong, setPreventPrevSong] = useState(false)
     const [preventNextSong, setPreventNextSong] = useState(false)
@@ -37,7 +37,7 @@ export const Player = () => {
     const audioUrl = (dataSong, play) => {
 
         // fetch('https://beat-bliss-api-django.onrender.com/api/songfiles/' + dataSong.mp3_file + '/')
-        fetch('http://127.0.0.1:8000/api/songfiles/' + dataSong.mp3_file + '/')
+        fetch(`${urlApi}/songfiles/${dataSong.mp3_file}/`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Error en la solicitud');

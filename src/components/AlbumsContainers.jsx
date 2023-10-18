@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import { Card } from './card'
 import { v4 as uuidv4 } from 'uuid';
+import { useGlobalVariables } from '../store/GlobalVariables';
 
 export const AlbumsContainers = ({ title, list, typeCard, gradientColors }) => {
+    const {currentUrl} = useGlobalVariables()
 
     const handleXScroll = (e) => {
 
@@ -15,7 +17,13 @@ export const AlbumsContainers = ({ title, list, typeCard, gradientColors }) => {
     }
 
     const handleCardHoverEvent = (e) => {
-        const outerDiv = document.getElementById('discoverPage');
+        let outerDiv;
+        if(currentUrl === '/search') {
+            outerDiv = document.getElementById('searchPage');
+        }
+        else{
+            outerDiv = document.getElementById('discoverPage');
+        }
         const innerDiv = document.getElementById(`${title}container`);
 
         if (e.type === 'mouseenter') {

@@ -2,6 +2,9 @@ import { create } from "zustand";
 
 
 export const useGlobalVariables = create((set) => ({
+    urlApi: 'https://beat-bliss-api-django.onrender.com/api',
+    // urlApi: 'http://127.0.0.1:8000/api',
+
     posts: [],
     setPosts: (posts) => set({ posts }),
 
@@ -25,6 +28,9 @@ export const useGlobalVariables = create((set) => ({
 
     albumMood: [],
     setAlbumMood: (albumMood) => set({ albumMood }),
+
+    searchValue: '',
+    setSearchValue: (searchValue) => set({ searchValue }),
 
     error: null,
     setError: (error) => set({ error }),
@@ -83,7 +89,6 @@ export const useGlobalVariables = create((set) => ({
     urlsArray: ['/'],
     setUrlsArray: (urlsArray) => set({ urlsArray }), 
 
-    
     succesLogin : null,
     setSuccesLogin : (succesLogin) => set({succesLogin}),
 
@@ -95,5 +100,11 @@ export const useGlobalVariables = create((set) => ({
     
     userPlayLists: [],
     setUserPlayLists: (userPlayLists) => set({ userPlayLists }),
+
+    nextPageExists: false,
+    setNextPageExists: (nextPageExists) => set({ nextPageExists }),
+
+    prevPageExists: false,
+    setPrevPageExists: (prevPageExists) => set({ prevPageExists }),
 
 }));

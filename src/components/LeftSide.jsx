@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { HomeIcon } from '../assets/icons/HomeIcon.jsx'
-import { SearchIcon } from '../assets/icons/Searchicon.jsx'
+import { SearchIcon } from '../assets/icons/SearchIcon.jsx'
 import { useGlobalVariables } from '../store/GlobalVariables.jsx'
 import { Link } from 'react-router-dom'
 import library from '../assets/icons/library.svg'
@@ -10,13 +10,12 @@ import { Trash } from '../assets/icons/Trash.jsx'
 export const LeftSide = () => {
 
   const { homeButton, searchButton, libraryButton, setLibraryButton, currentAlbumId, userPlayLists, userName,
-    setUserPlayLists, userId } = useGlobalVariables()
+    setUserPlayLists, userId, urlApi } = useGlobalVariables()
 
   const handleClick = (e) => {
     if (e.target.id === 'libraryButton') {
       setLibraryButton(!libraryButton)
     }
-
   }
 
   const postNewUserPlaylist = async (newPlaylist) => {
@@ -30,7 +29,7 @@ export const LeftSide = () => {
 
     console.log('data', data)
 
-    const response = await fetch(`http://127.0.0.1:8000/api/users/${userId}/`, {
+    const response = await fetch(`${urlApi}/users/${userId}/`, {
       method: 'PUT',
       body: JSON.stringify(data),
       headers: {
@@ -125,12 +124,12 @@ export const LeftSide = () => {
               })
 
             :
-            <div className='flex bg-[#242424] flex-col p-5 rounded-lg'>
-              <strong>
+            <div className='flex bg-[#242424] flex-col sm:p-5 rounded-lg overflow-hidden'>
+              <strong className='text-xs sm:text-sm'>
                 Login to see your playlists
               </strong>
               <Link to='/login'>
-                <div className='flex justify-center items-center w-[100px] h-[30px] bg-white  rounded-full text-black font-bold text-sm mt-2 cursor-pointer hover:scale-105 hover:bg-[#1FDF64]'>
+                <div className='flex justify-center items-center w-full lg:w-[100px] h-[30px] bg-white  rounded-full text-black font-bold text-xs sm:text-sm mt-2 cursor-pointer hover:scale-105 hover:bg-[#1FDF64]'>
                   Log in
                 </div>
               </Link>

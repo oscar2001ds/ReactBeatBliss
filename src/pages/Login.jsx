@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import viteIcon from '../../public/vite.svg';
+import logo from '../assets/logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,7 +7,7 @@ import { useGlobalVariables } from '../store/GlobalVariables';
 
 export const Login = () => {
 
-    const { succesLogin, setSuccesLogin } = useGlobalVariables()
+    const { succesLogin, setSuccesLogin, urlApi } = useGlobalVariables()
     const [usernameInput, setUsernameInput] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
@@ -60,7 +60,7 @@ export const Login = () => {
     }, [succesLogin]);
 
     const handleSubmit = async () => {
-        fetch('http://127.0.0.1:8000/api/users').
+        fetch(`${urlApi}/users`).
             then(response => response.json()).
             then(data => {
                 const user = data.find((user) => (user.username === usernameInput || user.email === usernameInput) && user.password === password)
@@ -89,14 +89,16 @@ export const Login = () => {
 
     return (
         <div className="w-screen h-screen flex flex-col">
-            <div className="flex justify-start items-center gap-2 p-6 bg-black">
-                <img src={`${viteIcon}`} alt="principalIcon"
-                    style={{
-                        height: '50px',
-                        width: '50px',
-                        backgroundSize: 'cover',
-                    }} />
-                <h1 className="text-2xl font-bold text-white">BeatBliss</h1>
+            <div className="flex justify-start bg-black">
+                <div className='flex items-center gap-2 p-6 cursor-default hover:scale-105' onClick={()=>{navigate('/')}}>
+                    <img src={`${logo}`} alt="principalIcon"
+                        style={{
+                            height: '50px',
+                            width: '50px',
+                            backgroundSize: 'cover',
+                        }} />
+                    <h1 className="text-2xl font-bold text-white">BeatBliss</h1>
+                </div>
             </div>
             <div className='flex flex-grow justify-center  bg-gradient-to-b from-[#191919] to-[#070707]'>
                 <div className='mt-5 flex flex-col  w-[40vw] bg-black rounded-xl'>

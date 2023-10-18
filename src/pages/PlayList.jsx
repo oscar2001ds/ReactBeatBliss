@@ -11,7 +11,7 @@ import { Heart } from "../assets/icons/Hearth"
 export const PlayList = () => {
     const { posts, albums, currentAlbumId, playState, setPlayState,
         setCurrentAlbumId, setCurrentPlaylist, currentSongId, setCurrentSongId,
-        setCurrentSongPos, firstPostLoad, setFirstPostLoad, userPlayLists, setUserPlayLists, userId } = useGlobalVariables()
+        setCurrentSongPos, firstPostLoad, setFirstPostLoad, userPlayLists, setUserPlayLists, userId, urlApi } = useGlobalVariables()
     const [currentAlbumName, setCurrentAlbumName] = useState('')
     const [currentAlbumImg, setCurrentAlbumImg] = useState('')
     const [currentAlbumDesc, setCurrentAlbumDesc] = useState('')
@@ -79,7 +79,7 @@ export const PlayList = () => {
     }, [playListColorRefresh]);
 
     useEffect(() => {
-        if (albumIdParam === '') return
+        if (albumIdParam === '' || albums.length===0) return
         const currentAlbum = albums.filter((album) => albumIdParam === album.id)[0]
         setCurrentAlbumName(currentAlbum.albumName)
         setCurrentAlbumDesc(currentAlbum.albumDesc)
@@ -92,8 +92,7 @@ export const PlayList = () => {
         if (isInUserLibrary) setIsFav(true)
         else setIsFav(false)
 
-
-    }, [albumIdParam]);
+    }, [albumIdParam, albums]);
 
     const handlePlay = (e) => {
         e.stopPropagation()
@@ -136,7 +135,7 @@ export const PlayList = () => {
 
         console.log('data',data)
             
-        const response = await fetch(`http://127.0.0.1:8000/api/users/${userId}/`, {
+        const response = await fetch(`${urlApi}/users/${userId}/`, {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {

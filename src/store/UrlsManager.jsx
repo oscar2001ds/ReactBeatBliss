@@ -5,7 +5,8 @@ import { useGlobalVariables } from "./GlobalVariables"
 
 export const UrlsManager = () => {
     const location = useLocation()
-    const { urlsArray, setUrlsArray, setHomeButton, setSearchButton, setPlaylistButton, setCurrentUrl, setPlayState, setFirstPostLoad } = useGlobalVariables()
+    const { urlsArray, setUrlsArray, setHomeButton, setSearchButton, setPlaylistButton, 
+        setCurrentUrl, currentUrl, setFirstPostLoad, setNextPageExists, setPrevPageExists } = useGlobalVariables()
 
 
     useEffect(() => {
@@ -27,7 +28,7 @@ export const UrlsManager = () => {
             setSearchButton(false)
             setPlaylistButton(false)
         }
-        else if (cUrl === '/search/') {
+        else if (cUrl.includes('/search')) {
             setHomeButton(false)
             setSearchButton(true)
             setPlaylistButton(false)
@@ -47,6 +48,24 @@ export const UrlsManager = () => {
         }
 
     }, [urlsArray]);
+
+    useEffect(() => {
+        const isPrevPage = window.history.state.idx > 0;
+        const isNextPage = window.history.state.idx < (window.history.length - 1);
+        if (isNextPage) {
+            setNextPageExists(true)
+        }
+        else {
+            setNextPageExists(false)
+        }
+        if (isPrevPage) {
+            setPrevPageExists(true)
+        }
+        else {
+            setPrevPageExists(false)
+        }
+    }, [currentUrl]);
+
 
     return (
         <></>
