@@ -92,7 +92,12 @@ export const Player = () => {
         }
 
         const handleEnded = () => {
-            setCurrentSongPos(currentSongPos + 1 > currentPlaylist.data.length - 1 ? currentPlaylist.data.length - 1 : currentSongPos + 1)
+            if(currentSongPos + 1 > currentPlaylist.data.length - 1){
+                setPlayState(false)
+            }
+            else{
+                setCurrentSongPos(currentSongPos + 1)
+            }
         }
 
         audio[0].addEventListener('timeupdate', () => {
@@ -197,7 +202,7 @@ export const Player = () => {
         }
         else if (e.target.id === "volume") {
             if (muteButton) {
-                audio[0].volume = 1;
+                audio[0].volume = passNoMuteVolSlicerValue/100;
                 setMuteButton(false)
                 setVolSlicerValue(passNoMuteVolSlicerValue)
             }
@@ -291,7 +296,7 @@ export const Player = () => {
                         }
                     </div>
 
-                    <div className="w-[15vw] sm:w-[85px]">
+                    <div className="flex items-center w-[15vw] sm:w-[85px]">
                         <input type="range" id="volSlicer" min={0} max={100} step={1} value={volSlicerValue} onChange={handleReproduction}
                             style={{
                                 width: "100%",
