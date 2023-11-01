@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useGlobalVariables } from "./GlobalVariables"
 
 
@@ -7,7 +7,7 @@ export const UrlsManager = () => {
     const location = useLocation()
     const { urlsArray, setUrlsArray, setHomeButton, setSearchButton, setPlaylistButton, 
         setCurrentUrl, currentUrl, setFirstPostLoad, setNextPageExists, setPrevPageExists } = useGlobalVariables()
-
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (urlsArray.length === 0) return
@@ -65,6 +65,17 @@ export const UrlsManager = () => {
             setPrevPageExists(false)
         }
     }, [currentUrl]);
+
+    // useEffect(() => {
+    //     const  handleBeforeUnload = (event) => {
+    //         navigate('/')
+    //       }
+    //     window.addEventListener("beforeunload", handleBeforeUnload);
+
+    //     return () => {
+    //         window.removeEventListener("beforeunload", handleBeforeUnload);
+    //     }
+    // }, []);
 
 
     return (

@@ -22,7 +22,6 @@ export const PlayList = () => {
     const [currentPlaylistColors, setCurrentPlaylistColors] = useState({ color1: '#7e5751', color2: '#121212', color3: '#121212' })
     const [playListColorRefresh, setPlayListColorRefresh] = useState(false)
 
-
     const getPredominantsColors = () => {
         const albumImageContainer = document.getElementById('albumImageId')
         const canvas = document.createElement('canvas');
@@ -79,14 +78,17 @@ export const PlayList = () => {
     }, [playListColorRefresh]);
 
     useEffect(() => {
-        if (albumIdParam === '' || albums.length===0) return
+        if(albums.length === 0 || albumIdParam==='') return
         const currentAlbum = albums.filter((album) => albumIdParam === album.id)[0]
+        if(currentAlbum === undefined) return
         setCurrentAlbumName(currentAlbum.albumName)
         setCurrentAlbumDesc(currentAlbum.albumDesc)
         setCurrentAlbumImg(currentAlbum.albumImg)
         const currentAlbumSongs = posts.filter((post) => currentAlbum.songs.includes(post.id))
         setAlbumSongs(currentAlbumSongs)
-        setPlayListColorRefresh(true)
+        setTimeout(() => {
+            setPlayListColorRefresh(true)
+        }, 100);
 
         const isInUserLibrary = userPlayLists.find((album) => album.id === albumIdParam)
         if (isInUserLibrary) setIsFav(true)
@@ -124,7 +126,7 @@ export const PlayList = () => {
         }
     }
 
-    const postNewUserPlaylist = async(newPlaylist) => {    
+    const postNewUserPlaylist = async (newPlaylist) => {
 
         let newPlayListIDS = newPlaylist.map((album) => album.id.slice(5,))
         const data = {
@@ -133,8 +135,8 @@ export const PlayList = () => {
             ]
         }
 
-        console.log('data',data)
-            
+        console.log('data', data)
+
         const response = await fetch(`${urlApi}/users/${userId}/`, {
             method: 'PUT',
             body: JSON.stringify(data),
@@ -143,7 +145,7 @@ export const PlayList = () => {
             },
         })
         const json = await response.json()
-        console.log('json',json)
+        console.log('json', json)
 
     }
 

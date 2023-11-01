@@ -7,10 +7,9 @@ import { AlbumsContainers } from "../components/AlbumsContainers"
 
 export const Search = () => {
 
-  const { genres, libraryButton, infoButton, searchValue, posts } = useGlobalVariables()
+  const { genres, libraryButton, infoButton, searchValue, posts, albumSearch, setAlbumSearch } = useGlobalVariables()
   const bgArrayColors = useRef(['bg-[#006450]', 'bg-[#7358FF]', 'bg-[#1E3264]', 'bg-[#E8115B]', 'bg-[#E1118C]', 'bg-[#8C1932]', 'bg-[#148A08]', 'bg-[#503750]', 'bg-[#8D67AB]', 'bg-[#B06239]', 'bg-[#509BF5]', 'bg-[#8D67AB]', 'bg-[#D84000]', 'bg-[#E1118C]', 'bg-[#E91429]', 'bg-[#777777]', 'bg-[#438270]', 'bg-[#BA5D07]'])
   const navigate = useNavigate()
-  const [albumSearch, setAlbumSearch] = useState([])
 
   const handleClick = (e) => {
     const albumName = 'album' + e.currentTarget.id;
@@ -39,7 +38,6 @@ export const Search = () => {
         {/* Searched Songs */}
         <AlbumsContainers title={"Search: "+`${searchValue}`} list={albumSearch} typeCard={'songs'}
           gradientColors='bg-gradient-to-br from-[#181818] via-[#000000] to-[#31084f]' />
-
       </div>
 
       <div className='flex px-8 pt-4'>

@@ -1,20 +1,34 @@
 import { create } from "zustand";
-
+import loading from '../assets/img/loading.gif'
 
 export const useGlobalVariables = create((set) => ({
     urlApi: 'https://beat-bliss-api-django.onrender.com/api',
-    // urlApi: 'http://127.0.0.1:8000/api',
+    //urlApi: 'http://127.0.0.1:8000/api',
 
-    posts: [],
+    posts: [
+        { id: 'loadingPost1', songName: '', songImg: loading, artistName: '', genre: '', year: '', created_at: '', updated_at: '' },
+        { id: 'loadingPost2', songName: '', songImg: loading, artistName: '', genre: '', year: '', created_at: '', updated_at: '' },
+        { id: 'loadingPost3', songName: '', songImg: loading, artistName: '', genre: '', year: '', created_at: '', updated_at: '' },
+        { id: 'loadingPost4', songName: '', songImg: loading, artistName: '', genre: '', year: '', created_at: '', updated_at: '' },
+        { id: 'loadingPost5', songName: '', songImg: loading, artistName: '', genre: '', year: '', created_at: '', updated_at: '' },
+        { id: 'loadingPost6', songName: '', songImg: loading, artistName: '', genre: '', year: '', created_at: '', updated_at: '' },
+    ],
     setPosts: (posts) => set({ posts }),
 
-    currentPlaylist: {data:[],initialSongPos:0},
+    currentPlaylist: { data: [], initialSongPos: 0 },
     setCurrentPlaylist: (currentPlaylist) => set({ currentPlaylist }),
 
-    albums: [],
+    albums: Array(15).fill(0).map((object, i) => {
+        return { id: `loadingAlbum${i + 1}`, albumName: '', albumImg: loading, albumDesc: '', songs: Array(0) }
+    }),
     setAlbums: (albums) => set({ albums }),
 
-    artists: [],
+    originalAlbumsLength: 0,
+    setOriginalAlbumsLength: (originalAlbumsLength) => set({ originalAlbumsLength }),
+
+    artists: [
+
+    ],
     setArtists: (artists) => set({ artists }),
 
     genres: [],
@@ -28,6 +42,9 @@ export const useGlobalVariables = create((set) => ({
 
     albumMood: [],
     setAlbumMood: (albumMood) => set({ albumMood }),
+
+    albumSearch : [],
+    setAlbumSearch : (albumSearch) => set({albumSearch}),
 
     searchValue: '',
     setSearchValue: (searchValue) => set({ searchValue }),
@@ -53,7 +70,7 @@ export const useGlobalVariables = create((set) => ({
     songName: '',
     setSongName: (songName) => set({ songName }),
 
-    songImg: '',
+    songImg: loading,
     setSongImg: (songImg) => set({ songImg }),
 
     songArtist: '',
@@ -79,7 +96,7 @@ export const useGlobalVariables = create((set) => ({
 
     infoButton: true,
     setInfoButton: (infoButton) => set({ infoButton }),
-    
+
     playlistButton: false,
     setPlaylistButton: (playlistButton) => set({ playlistButton }),
 
@@ -87,17 +104,17 @@ export const useGlobalVariables = create((set) => ({
     setCurrentUrl: (currentUrl) => set({ currentUrl }),
 
     urlsArray: ['/'],
-    setUrlsArray: (urlsArray) => set({ urlsArray }), 
+    setUrlsArray: (urlsArray) => set({ urlsArray }),
 
-    succesLogin : null,
-    setSuccesLogin : (succesLogin) => set({succesLogin}),
+    succesLogin: null,
+    setSuccesLogin: (succesLogin) => set({ succesLogin }),
 
-    userId : null,
-    setUserId : (userId) => set({userId}),
+    userId: null,
+    setUserId: (userId) => set({ userId }),
 
     userName: '',
     setUserName: (userName) => set({ userName }),
-    
+
     userPlayLists: [],
     setUserPlayLists: (userPlayLists) => set({ userPlayLists }),
 

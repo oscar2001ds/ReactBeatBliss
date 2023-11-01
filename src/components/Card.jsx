@@ -7,7 +7,7 @@ import { useNavigate  } from 'react-router-dom';
 export const Card = ({ idValue, img, title, desc, typeCard, gradientColors='bg-gradient-to-b from-[#181818] via-[#181818] to-[#1b1b1b]' }) => {
 
   const { posts, currentAlbumId, setCurrentAlbumId, currentPlaylist ,setCurrentPlaylist, albums,
-    setCurrentSongPos, currentSongId, setCurrentSongId, playState, setPlayState, setInfoButton, albumRecently,firstPostLoad, setFirstPostLoad } = useGlobalVariables()
+    setCurrentSongPos, currentSongId, setCurrentSongId, playState, setPlayState, setInfoButton, albumRecently, albumSearch, currentUrl,firstPostLoad, setFirstPostLoad } = useGlobalVariables()
   const [hoverCard, setHoverCard] = useState(false)
   const navigate = useNavigate ();
 
@@ -43,17 +43,33 @@ export const Card = ({ idValue, img, title, desc, typeCard, gradientColors='bg-g
         }
       }
       else {
-        const currentSongPosition = albumRecently.findIndex((post) => post.id === idValue)
-        if (currentPlaylist.data !== albumRecently ) {
-          setPlayState(false)
-          setTimeout(() => {
-            setCurrentAlbumId('')
-            setCurrentPlaylist({data:albumRecently,initialSongPos:currentSongPosition})
-          }, 200);
+        if (currentUrl.includes('/search')) {
+          const currentSongPosition = albumSearch.findIndex((post) => post.id === idValue)
+          if (currentPlaylist.data !== albumSearch ) {
+            setPlayState(false)
+            setTimeout(() => {
+              setCurrentAlbumId('')
+              setCurrentPlaylist({data:albumSearch,initialSongPos:currentSongPosition})
+            }, 200);
+          }
+          else {
+            setCurrentSongId(idValue)
+            setCurrentSongPos(currentSongPosition)
+          }
         }
-        else {
-          setCurrentSongId(idValue)
-          setCurrentSongPos(currentSongPosition)
+        else{
+          const currentSongPosition = albumRecently.findIndex((post) => post.id === idValue)
+          if (currentPlaylist.data !== albumRecently ) {
+            setPlayState(false)
+            setTimeout(() => {
+              setCurrentAlbumId('')
+              setCurrentPlaylist({data:albumRecently,initialSongPos:currentSongPosition})
+            }, 200);
+          }
+          else {
+            setCurrentSongId(idValue)
+            setCurrentSongPos(currentSongPosition)
+          }
         }
       }
     }

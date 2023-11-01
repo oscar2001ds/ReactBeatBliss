@@ -18,7 +18,7 @@ export const Player = () => {
     const { currentPlaylist, currentSongPos, setCurrentSongPos, setCurrentSongId, playState, setPlayState,
         songName, setSongName, songImg, setSongImg, infoButton, setInfoButton, playlistButton,
         songArtist, setSongArtist, setSongGenre, artists, setArtistImg, setArtistDesc, currentAlbumId, urlsArray,
-        firstPostLoad, setFirstPostLoad, urlApi} = useGlobalVariables();
+        firstPostLoad, setFirstPostLoad, urlApi, setCurrentAlbumId, setCurrentPlaylist, albums, posts, originalAlbumsLength} = useGlobalVariables();
     const [audio, setAudio] = useState([null, false])
     const [preventPrevSong, setPreventPrevSong] = useState(false)
     const [preventNextSong, setPreventNextSong] = useState(false)
@@ -35,7 +35,7 @@ export const Player = () => {
 
 
     const audioUrl = (dataSong, play) => {
-
+        if(dataSong.mp3_file === undefined) return;
         // fetch('https://beat-bliss-api-django.onrender.com/api/songfiles/' + dataSong.mp3_file + '/')
         fetch(`${urlApi}/songfiles/${dataSong.mp3_file}/`)
             .then((response) => {
@@ -49,7 +49,7 @@ export const Player = () => {
                 const blob = new Blob([new Uint8Array(binaryData.length).map((_, i) => binaryData.charCodeAt(i))], { type: 'audio/mpeg' });
                 const newAudio = new Audio(URL.createObjectURL(blob));
                 setAudio([newAudio, play]);
-                console.log('songName', dataSong.songName)
+                // console.log('songName', dataSong.songName)
                 setSongName(dataSong.songName);
                 setSongImg(dataSong.songImg);
                 setSongArtist(dataSong.artistName);
@@ -93,7 +93,27 @@ export const Player = () => {
 
         const handleEnded = () => {
             if(currentSongPos + 1 > currentPlaylist.data.length - 1){
+                const currentAlbumPos = albums.findIndex((album) => album.id === currentAlbumId)
+                let newAlbum
+                if (currentAlbumPos + 1 >= originalAlbumsLength) {
+                    newAlbum = albums[0]
+                    
+                }else{
+                    newAlbum = albums[currentAlbumPos + 1]
+                }
+                const idSongs = newAlbum.songs
+                const newPlaylist = posts.filter((post) => idSongs.includes(post.id))
                 setPlayState(false)
+                setCurrentAlbumId(newAlbum.id)
+                setTimeout(() => {
+                    setCurrentPlaylist({ data: newPlaylist, initialSongPos: 0 })
+                    if (playlistButton) {
+                        navigate(`/playlist/${newAlbum.id}`);   
+                    }
+                }, 200);
+                
+                return;
+
             }
             else{
                 setCurrentSongPos(currentSongPos + 1)
@@ -123,7 +143,7 @@ export const Player = () => {
 
     useEffect(() => {
         if (currentPlaylist.data.length === 0 || currentPlaylist.data === null) return;
-        console.log('currentPlaylist.data', currentPlaylist.data)
+        // console.log('currentPlaylist.data', currentPlaylist.data)
 
         if (!firstPostLoad) {
             audioUrl(currentPlaylist.data[0], false);
@@ -140,7 +160,7 @@ export const Player = () => {
 
     useEffect(() => {
         if (currentPlaylist.data.length > 0) {
-            console.log('currentSongPos', currentSongPos)
+            // console.log('currentSongPos', currentSongPos)
             setPlayState(false)
             if (currentSongPos === currentPlaylist.data.length - 1) {
                 audioUrl(currentPlaylist.data[currentPlaylist.data.length - 1], true);
@@ -193,7 +213,7 @@ export const Player = () => {
 
             if (currentAlbumId !== '') {
                 if (playlistButton) {
-                    navigate(urlsArray[urlsArray.length - 2])
+                    navigate('/')
                 } else {
                     navigate(`/playlist/${currentAlbumId}`);
                 }
